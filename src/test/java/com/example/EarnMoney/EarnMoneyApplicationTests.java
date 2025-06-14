@@ -1,0 +1,13 @@
+package com.example.EarnMoney;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class EarnMoneyApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
