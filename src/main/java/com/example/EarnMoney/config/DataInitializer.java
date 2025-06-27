@@ -25,7 +25,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Create roles
+       /* // Create roles
         Role adminRole = roleRepository.save(new Role("ROLE_ADMIN"));
         Role userRole = roleRepository.save(new Role("ROLE_USER"));
 
@@ -34,6 +34,13 @@ public class DataInitializer implements CommandLineRunner {
         User user = userRepository.save(new User("user", passwordEncoder.encode("user123"), true, Set.of(userRole)));
 
         userRepository.save(admin);
+        userRepository.save(user);*/
+        Role adminRole = roleRepository.save(new Role("ADMIN"));
+
+        Role adminRoles = roleRepository.findByName("ADMIN")
+                .orElseThrow(() -> new RuntimeException("Role not found"));
+
+        User user = new User("admin", passwordEncoder.encode("admin123"), true, Set.of(adminRoles));
         userRepository.save(user);
     }
 }

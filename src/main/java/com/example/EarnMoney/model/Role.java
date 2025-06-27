@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -17,10 +20,12 @@ public class Role {
     @Column(unique = true, nullable = false)
     private String name;
 
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    private Set<User> users = new HashSet<>();
+
     public Role(String name) {
         this.name = name;
     }
-
 
 
 }

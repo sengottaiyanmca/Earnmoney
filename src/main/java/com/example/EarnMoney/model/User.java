@@ -1,9 +1,11 @@
 package com.example.EarnMoney.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,12 +14,16 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
+
+@Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
@@ -25,13 +31,14 @@ public class User {
 
     private boolean enabled;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
+
 
     public User(String username, String password, boolean enabled, Set<Role> roles) {
         this.username = username;
@@ -40,4 +47,14 @@ public class User {
         this.roles = roles;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                '}';
+    }
 }
+
